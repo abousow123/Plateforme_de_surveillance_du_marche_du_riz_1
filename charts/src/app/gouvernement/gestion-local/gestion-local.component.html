@@ -1,0 +1,113 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <i class="fa fa-bar-chart-o"></i>
+
+    <h3 class="box-title">Catalogue des Stockls de riz local
+    </h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+      <button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#newModal">+Nouveau Stockl Local</button>
+      <p></p>
+    <div class="row">
+
+      <div class="col-sm-6 col-md-3" *ngFor="let local of usines" data-toggle="modal" data-target="#myModalinf">
+        <div class="thumbnail">
+         
+          <div class="caption">
+            <h3>{{local.nomUsine}}</h3>
+
+            <p>TEL: {{local.telephone}}</p>
+            <p>email: {{local.email}}</p>
+            <p>Région de Siége: {{local.departement.region.nomRegion}}</p>
+
+
+            <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myStock"
+                (click)="selected(local)">Détails</button></p>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+
+
+</div>
+<!-- /.box-body-->
+</div>
+<div class="modal fade " id="newModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Nouveau dépot de paddy</h4>
+        </div>
+        <div class="modal-body">
+        sfffggfgf
+        </div>
+        <div class="modal-footer">
+
+         
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="myStock" role="dialog" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog ">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Informations Stock</h4>
+          </div>
+          <div class="modal-body">
+            
+              
+
+                <fieldset>
+                  <legend> Coordonnées du Stock</legend>
+
+                  <h3>{{usine.nomUsine}}</h3>
+                
+                  <p>TEL: {{usine.telephone}}</p>
+                  <p>email: {{usine.email}}</p>
+                  <p>Siége: {{usine.departement.region.nomRegion}}</p>
+
+                </fieldset>
+                <p></p>
+               
+                <button type="button" class="btn btn-primary"  data-dismiss="modal">Editer</button>
+&nbsp;
+                <button type="button" class="btn btn-danger"  data-dismiss="modal">Supprimer</button>
+
+              
+            
+          </div>
+          <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>

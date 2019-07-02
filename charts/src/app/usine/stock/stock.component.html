@@ -1,0 +1,125 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <i class="fa fa-bar-chart-o"></i>
+
+    <h3 class="box-title">Information sur le stock
+    </h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <div class="row">
+
+      <div class="col-sm-6 col-md-3" *ngFor="let categorie of categories" (click)="select(categorie)"
+        data-toggle="modal" data-target="#myModalinf">
+        <div class="thumbnail">
+          <img src="../../../assets/dist/img/riz1.jpg" alt="...">
+          <div class="caption">
+            <h3>{{categorie.categorie.categorie}}</h3>
+            <p>{{categorie.categorie.description}}</p>
+            <h3>Quantité en stock:{{categorie.quantite}}Kgs </h3>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20"
+                aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                <span class="sr-only">20% Complete</span>
+              </div>
+            </div>
+
+            <p><button type="button" class="btn btn-primary">Update </button></p>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal fade" id="myModalinf" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Information sur la catégorie de riz en stock</h4>
+            </div>
+            <div class="modal-body">
+              <img src="../../../assets/dist/img/riz1.jpg" alt="...">
+              <h3>{{cat.categorie.categorie}}</h3>
+              <p>{{cat.categorie.description}}</p>
+              <p>Quantité en stock:{{cat.quantite}}Kgs</p>
+            </div>
+            <div class="modal-footer">
+
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-4 col-md-4">
+          <div class="thumbnail">Niveau du stock en %
+              <div class="progress">
+                <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"
+                  aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                  <span class="sr-only">60% Complete </span>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary">Mettre à jour le niveau</button>
+            </div>
+      </div>
+      <div class="col-sm-8 col-md-8">
+
+        
+
+        <div class="thumbnail">
+          <div style="display: block">
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
+          </div>
+          <button type="button" class="btn btn-primary">Mettre à jour </button>
+        </div>
+      </div>
+     
+
+    </div>
+    <!--<div>
+      <div style="display: block">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+    </div> 
+    
+    <div class="progress">
+      <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"
+        aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+        <span class="sr-only">60% Complete (warning)</span>
+      </div>
+    </div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80"
+        aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+        <span class="sr-only">80% Complete (danger)</span>
+      </div>
+    </div>
+    <div id="donut-chart" style="height: 300px;"></div>
+  -->
+
+
+  </div>
+  <!-- /.box-body-->
+</div>

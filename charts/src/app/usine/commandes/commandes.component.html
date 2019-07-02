@@ -1,0 +1,499 @@
+<div *ngIf="idpage==1">
+  nouveau commande
+</div>
+<div *ngIf="idpage==0">
+  <p>Liste des Commandes en cours...</p>
+
+  <button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#myModalajout">+Nouveau</button>
+  <!-- Modal conten<button type="button" [ngClass]="{'btn-info': selected ,'btn':true}"  [disabled]="!selected">Details commande</button>t-->
+  &nbsp;
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary">Actions+</button>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Edit</a></li>
+      <li><a href="#">Nouveau</a></li>
+    </ul>
+  </div>
+
+  <table class="table table-hovers table-striped table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Numéro Commande</th>
+        <th scope="col">Nom et Prénom du distributeurs</th>
+        <th scope="col">Quantité de riz(KGs)</th>
+        <th scope="col">Qualité de riz</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      <tr *ngFor="let commande of commandes"  (click)="isSelected(commande)"
+        (mouseover)="hovered=true" (mouseout)="hovered=false" data-toggle="modal" data-target="#myModal">
+        <th scope="row">{{commande.idcomLocal}}</th>
+        <td>{{commande.distributeurs.utilisateur.nom}} {{commande.distributeurs.utilisateur.prenom}}</td>
+        <td>{{commande.quantite}}</td>
+        <td>{{commande.qualite}}</td>
+        <td><i class="glyphicon glyphicon-shopping-cart"></i> <span class="label label-warning">En attente</span></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Details Commandes</h4>
+        </div>
+        <div class="modal-body">
+          <p>Nom et Prenom du distributeur: {{CommandSelected.distributeurs.utilisateur.nom}}
+            {{CommandSelected.distributeurs.utilisateur.prenom}}
+          </p>
+          <p>Numéro du distributeur: {{CommandSelected.distributeurs.utilisateur.telephone}}</p>
+          <p>Email du distributeur: {{CommandSelected.distributeurs.utilisateur.email}}</p>
+          <p>Adresse du distributeur: {{CommandSelected.distributeurs.utilisateur.adresse}}</p>
+          <p>Qualité de riz commandé: {{CommandSelected.qualite}}</p>
+          <p>Quantité de riz commandé (KG): {{CommandSelected.quantite}}</p>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success" (click)="validerCommand(CommandSelected)"
+            data-dismiss="modal" >Valider commande</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Mettre en Attente</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deletecom(CommandSelected)" >Supprimer commande</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal fade" id="myModalajout" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Nouvelle Commande</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Nouvelle Commande</div>
+            <div class="panel-body">
+
+              <fieldset>
+                <legend> Coordonnées du distributeurs</legend>
+
+
+                <label class="radio-inline"><input type="radio" name="optradio" checked (click)="annuaire(0)"> Consulter
+                  l'annuaire de
+                  Distributeur</label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="annuaire(1)">Ajouter un nouveau
+                  Distributeur</label>
+                <p></p>
+                <div class="form-group row" *ngIf="condition===1">
+                  <div class="col-xs-6">
+                    <label for="nom">Nom du Distributeur *</label>
+                    <input class="form-control" id="nom" type="text" [(ngModel)]="user.nom"
+                      placeholder="Nom du producteur">
+                  </div>
+                  <div class="col-xs-6">
+                    <label for="prenom">Prenom du Distributeur *</label>
+                    <input class="form-control" id="prenom" type="text" [(ngModel)]="user.prenom"
+                      placeholder="Prénom du producteur">
+                  </div>
+                  <br>
+                  <div class="col-xs-3">
+                    <label for="prenom">Téléphone</label>
+                    <input class="form-control" id="telephone" [(ngModel)]="user.telephone" type="number">
+                  </div>
+                  <div class="col-xs-7">
+                    <label for="email">Email Distributeur</label>
+                    <input class="form-control" id="email" type="email" [(ngModel)]="user.email"
+                      placeholder="Email du producteur">
+                  </div>
+                  <div class="col-xs-2">
+                    <label for="email">BP</label>
+                    <input class="form-control" id="bp" type="number" [(ngModel)]="user.bp" placeholder="Boite Postale">
+                  </div>
+                  <br>
+                  <div class="col-xs-7">
+                    <label for="adresse">Adresse</label>
+                    <input class="form-control" id="adresse" type="text" [(ngModel)]="user.adresse"
+                      placeholder="Adresse">
+                  </div>
+                  <div class="col-xs-5">
+                    <label class="control-label">Gies</label>
+                    <select class="form-control" [(ngModel)]="gieid">
+                      <option  *ngFor="let u of  gies" [value]="u.idGies2">{{u.nomGie}}</option>
+                    </select>
+                  </div>
+
+                </div>
+                <div *ngIf="condition===0">
+                  <label class="control-label">Choisir le Distributeur ou Commercant dans l'annuaire:</label>
+                  <select class="form-control" [(ngModel)]="dist">
+                    <option *ngFor="let d of distributeurs" [value]="d">{{d.ncCommercant}} {{d.utilisateur.nom}} {{d.utilisateur.prenom}}</option>
+                  </select>
+                </div>
+
+
+              </fieldset>
+              <p></p>
+              <div class="form-group">
+                <fieldset>
+                  <legend>Informations sur la commande</legend>
+
+
+                  <div class="form-group row">
+                    <div class="col-xs-4">
+                      <label class="control-label">Catégorie de Riz:</label>
+                      <input class="form-control" type="text" [(ngModel)]="CommandSelect.qualite"
+                        placeholder="quanlité du paddy à déposer">
+                    </div>
+                    <div class="col-xs-3">
+                      <label class="control-label">Quantité (KGs):</label>
+                      <input class="form-control" type="number" [(ngModel)]="CommandSelect.quantite" placeholder="Quantité">
+                    </div>
+
+
+                  </div>
+
+
+                </fieldset>
+              </div>
+              <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#myModalvalid" (click)="newcommande()">Enregistrer
+                commande</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+   
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+         
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal fade" id="myModalFact" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Créer une nouvelle Facture</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Nouvelle Facture</div>
+            <div class="panel-body">
+
+              <fieldset>
+                <legend> Coordonnées du distributeurs</legend>
+
+
+                <label class="radio-inline"><input type="radio" name="optradio" checked (click)="annuaire(0)"> Consulter
+                  l'annuaire de
+                  Distributeur</label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="annuaire(1)">Ajouter un nouveau
+                  Distributeur</label>
+                <p></p>
+                <div class="form-group row" *ngIf="condition===1">
+                  <div class="col-xs-6">
+                    <label for="nom">Nom du Distributeur *</label>
+                    <input class="form-control" id="nom" type="text" [(ngModel)]="user.nom"
+                      placeholder="Nom du producteur">
+                  </div>
+                  <div class="col-xs-6">
+                    <label for="prenom">Prenom du Distributeur *</label>
+                    <input class="form-control" id="prenom" type="text" [(ngModel)]="user.prenom"
+                      placeholder="Prénom du producteur">
+                  </div>
+                  <br>
+                  <div class="col-xs-3">
+                    <label for="prenom">Téléphone</label>
+                    <input class="form-control" id="telephone" [(ngModel)]="user.telephone" type="number">
+                  </div>
+                  <div class="col-xs-7">
+                    <label for="email">Email Distributeur</label>
+                    <input class="form-control" id="email" type="email" [(ngModel)]="user.email"
+                      placeholder="Email du producteur">
+                  </div>
+                  <div class="col-xs-2">
+                    <label for="email">BP</label>
+                    <input class="form-control" id="bp" type="number" [(ngModel)]="user.bp" placeholder="Boite Postale">
+                  </div>
+                  <br>
+                  <div class="col-xs-7">
+                    <label for="adresse">Adresse</label>
+                    <input class="form-control" id="adresse" type="text" [(ngModel)]="user.adresse"
+                      placeholder="Adresse">
+                  </div>
+                  <div class="col-xs-5">
+                    <label class="control-label">Gies</label>
+                    <select class="form-control" [(ngModel)]="gieid">
+                      <option  *ngFor="let u of  gies" [value]="u.idGies2">{{u.nomGie}}</option>
+                    </select>
+                  </div>
+
+                </div>
+                <div *ngIf="condition===0">
+                  <label class="control-label">Choisir le Distributeur ou Commercant dans l'annuaire:</label>
+                  <select class="form-control" [(ngModel)]="dist">
+                    <option *ngFor="let d of distributeurs" [value]="d">{{d.ncCommercant}} {{d.utilisateur.nom}} {{d.utilisateur.prenom}}</option>
+                  </select>
+                </div>
+
+
+              </fieldset>
+              <p></p>
+              <div class="form-group">
+                <fieldset>
+                  <legend>Informations sur la commande</legend>
+
+
+                  <div class="form-group row">
+                    <div class="col-xs-4">
+                      <label class="control-label">Catégorie de Riz:</label>
+                      <input class="form-control" type="text" [(ngModel)]="CommandSelect.qualite"
+                        placeholder="quanlité à commander">
+                    </div>
+                    <div class="col-xs-3">
+                      <label class="control-label">Quantité (KGs):</label>
+                      <input class="form-control" type="number" [(ngModel)]="CommandSelect.quantite" placeholder="Quantité">
+                    </div>
+
+
+                  </div>
+
+
+                </fieldset>
+              </div>
+              <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#myModalvalid" (click)="newcommande()">Enregistrer Commande
+                </button>  &nbsp;
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+   
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+         
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal fade" id="myModalvalid" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmation d'ajout de Commande</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Détail de la commande</div>
+            <div class="panel-body">
+
+              <fieldset>
+                <legend> Coordonnées du distributeurs</legend>
+
+
+                <p>Nom et Prenom du distributeur: {{CommandSelect.distributeurs.utilisateur.nom}}
+                  {{CommandSelect.distributeurs.utilisateur.prenom}}
+                </p>
+                <p>Numéro du distributeur: {{CommandSelect.distributeurs.utilisateur.telephone}}</p>
+                <p>Email du distributeur: {{CommandSelect.distributeurs.utilisateur.email}}</p>
+                <p>Adresse du distributeur: {{CommandSelect.distributeurs.utilisateur.adresse}}</p>
+                
+              </fieldset>
+              <p></p>
+              <div class="form-group">
+                <fieldset>
+                  <legend>Informations sur la commande</legend>
+
+
+                  <p>Qualité de riz commandée: {{CommandSelect.qualite}}</p>
+                  <p>Quantité de riz commandée (KG): {{CommandSelect.quantite}}</p>
+  
+
+
+                </fieldset>
+              </div>
+              
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+   
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+         
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div *ngIf="idpage==2">
+  <p>Liste des Commandes déja satisfaites...</p>
+
+  <button type="button" class="btn btn-primary active" (click)="nouveau()">+Nouveau</button>
+  <!-- Modal conten<button type="button" [ngClass]="{'btn-info': selected ,'btn':true}"  [disabled]="!selected">Details commande</button>t-->
+  &nbsp;
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary">Actions+</button>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Edit</a></li>
+      <li><a href="#">Nouveau</a></li>
+    </ul>
+  </div>
+
+  <table class="table table-hovers table-striped table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Numéro Commande</th>
+        <th scope="col">Nom et Prénom du distributeurs</th>
+        <th scope="col">Quantité de riz(KGs)</th>
+        <th scope="col">Qualité de riz</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      <tr *ngFor="let commande of commandesatisfait" (click)="isSelected(commande)" (mouseover)="hovered=true"
+        (mouseout)="hovered=false" data-toggle="modal" data-target="#myModal">
+        <th scope="row">{{commande.idcomLocal}}</th>
+        <td>{{commande.distributeurs.utilisateur.nom}} {{commande.distributeurs.utilisateur.prenom}}</td>
+        <td>{{commande.quantite}}</td>
+        <td>{{commande.qualite}}</td>
+        <td><i class="glyphicon glyphicon-shopping-cart"></i> <span class="label label-success">Facturé</span></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Details Commandes</h4>
+        </div>
+        <div class="modal-body">
+          <p>Nom et Prenom du distributeur: {{CommandSelected.distributeurs.utilisateur.nom}}
+            {{CommandSelected.distributeurs.utilisateur.prenom}}
+          </p>
+          <p>Numéro du distributeur: {{CommandSelected.distributeurs.utilisateur.telephone}}</p>
+          <p>Email du distributeur: {{CommandSelected.distributeurs.utilisateur.email}}</p>
+          <p>Adresse du distributeur: {{CommandSelected.distributeurs.utilisateur.adresse}}</p>
+          <p>Qualité de riz commandé: {{CommandSelected.qualite}}</p>
+          <p>Quantité de riz commandé (KG): {{CommandSelected.quantite}}</p>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" 
+            data-dismiss="modal">Voir la facture correspondante</button>
+          <button type="button" class="btn btn-danger">Supprimer commande</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div *ngIf="idpage==3">
+  <p>Historiques des commandes...</p>
+
+  <button type="button" class="btn btn-primary active" (click)="nouveau()">+Nouveau</button>
+  <!-- Modal conten<button type="button" [ngClass]="{'btn-info': selected ,'btn':true}"  [disabled]="!selected">Details commande</button>t-->
+  &nbsp;
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary">Actions+</button>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Edit</a></li>
+      <li><a href="#">Nouveau</a></li>
+    </ul>
+  </div>
+
+  <table class="table table-hovers table-striped table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Numéro Commande</th>
+        <th scope="col">Nom et Prénom du distributeurs</th>
+        <th scope="col">Quantité de riz(KGs)</th>
+        <th scope="col">Qualité de riz</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      <tr *ngFor="let commande of historique"  (click)="isSelected(commande)"
+        (mouseover)="hovered=true" (mouseout)="hovered=false" data-toggle="modal" data-target="#myModal">
+        <th scope="row">{{commande.idcomLocal}}</th>
+        <td>{{commande.distributeurs.utilisateur.nom}} {{commande.distributeurs.utilisateur.prenom}}</td>
+        <td>{{commande.quantite}}</td>
+        <td>{{commande.qualite}}</td>
+        <td><i class="glyphicon glyphicon-shopping-cart" ></i> 
+          <span class="label label-success" *ngIf="commande.statut===1">Facturé</span>
+          <span class="label label-warning" *ngIf="commande.statut===0">En attente</span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Details Commandes</h4>
+        </div>
+        <div class="modal-body">
+          <p>Nom et Prenom du distributeur: {{CommandSelected.distributeurs.utilisateur.nom}}
+            {{CommandSelected.distributeurs.utilisateur.prenom}}
+          </p>
+          <p>Numéro du distributeur: {{CommandSelected.distributeurs.utilisateur.telephone}}</p>
+          <p>Email du distributeur: {{CommandSelected.distributeurs.utilisateur.email}}</p>
+          <p>Adresse du distributeur: {{CommandSelected.distributeurs.utilisateur.adresse}}</p>
+          <p>Qualité de riz commandé: {{CommandSelected.qualite}}</p>
+          <p>Quantité de riz commandé (KG): {{CommandSelected.quantite}}</p>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success" (click)="validerCommand(CommandSelected)"
+            data-dismiss="modal" *ngIf="CommandSelected.statut===0">Valider commande</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" *ngIf="CommandSelected.statut===0">Mettre en Attente</button>
+          <button type="button" class="btn btn-danger">Supprimer commande</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+
+
+
+<button class="tablink" onclick="openPage('Home', this, 'rgb(60, 156, 216)')" (click)="updateb()">Quantité de riz par régions(Tonnes/Régions)</button>
+<button class="tablink" onclick="openPage('News', this, 'rgb(60, 156, 216)')"  (click)="updated()" id="defaultOpen">Données du marché(% de variété de riz vendu)</button>
+<button class="tablink" onclick="openPage('Contact', this, 'rgb(60, 156, 216)')"  (click)="updatep()">Rapport Importation/Production Locales</button>
+<button class="tablink" onclick="openPage('About', this, 'rgb(60, 156, 216)')"  (click)="updatep()">Données des variétés de riz local vendu</button>
+
+<div id="Home" class="tabcontent">
+  <div class="row">
+      
+      <div class="col-sm-10 col-md-12">
+        <div class="thumbnail">
+            <div style="display: block">
+                <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType">
+                </canvas>
+              </div>
+          <button type="button" class="btn btn-primary" (click)="updateb()">Mettre à jour </button>
+        </div>
+      </div>
+     
+  
+    </div>
+</div>
+
+<div id="News" class="tabcontent">
+  <div class="row">
+      <div class="col-sm-1 col-md-1"></div>
+      <div class="col-sm-10 col-md-10">
+        <div class="thumbnail">
+            <div style="display: block">
+                <canvas baseChart
+                            [data]="doughnutChartData"
+                            [labels]="doughnutChartLabels"
+                            [chartType]="doughnutChartType"></canvas>
+              </div>
+          <button type="button"  (click)="updated()" class="btn btn-primary">Mettre à jour </button>
+        </div>
+      </div>
+      <div class="col-sm-1 col-md-1"></div>
+  
+    </div>
+</div>
+
+<div id="Contact" class="tabcontent">
+  <div class="row">
+      <div class="col-sm-1 col-md-1"></div>
+      <div class="col-sm-10 col-md-10">
+        <div class="thumbnail">
+            <div style="display: block">
+                <canvas baseChart
+                        [data]="pieChartDatas"
+                        [labels]="pieChartLabelss"
+                        [chartType]="pieChartTypes"></canvas>
+              </div>
+          <button type="button" class="btn btn-primary"  (click)="updatep()">Mettre à jour </button>
+        </div>
+      </div>
+      <div class="col-sm-1 col-md-1"></div>
+  
+    </div>
+</div>
+
+<div id="About" class="tabcontent">
+  <div class="row">
+      <div class="col-sm-1 col-md-1"></div>
+      <div class="col-sm-10 col-md-10">
+        <div class="thumbnail">
+            <div style="display: block">
+                <canvas baseChart
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
+                        [chartType]="pieChartType"></canvas>
+              </div>
+          <button type="button" class="btn btn-primary"  (click)="updatep()">Mettre à jour </button>
+        </div>
+      </div>
+      <div class="col-sm-1 col-md-1"></div>
+  
+    </div>
+</div>

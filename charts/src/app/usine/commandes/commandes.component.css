@@ -1,0 +1,13 @@
+.hov{
+    background-color: grey ;
+}
+
+.hovered{
+    background-color: grey ;
+    
+}
+
+.table-hovers > tbody > tr:hover {
+    background-color: rgb(116, 109, 109);
+    color: white ;
+  }

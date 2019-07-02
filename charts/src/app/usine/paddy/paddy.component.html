@@ -1,0 +1,216 @@
+<div *ngIf="idpage==0">
+
+  <p>Liste des Dépots de paddy dans l'usine...</p>
+
+  <button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#newModal">+Nouveau</button>
+  <!-- Modal conten<button type="button" [ngClass]="{'btn-info': selected ,'btn':true}"  [disabled]="!selected">Details commande</button>t-->
+  &nbsp;
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary">Actions+</button>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Edit</a></li>
+      <li><a href="#">Nouveau</a></li>
+    </ul>
+  </div>
+
+  <table class="table table-hovers table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Numéro Commande</th>
+        <th scope="col">Nom et Prénom du distributeurs</th>
+        <th scope="col">Quantité de riz(KGs)</th>
+        <th scope="col">Qualité de riz</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      <tr *ngFor="let commande of depots" [ngClass]="{hov: selected ,hovered:false}" (click)="isSelected(commande)"
+        data-toggle="modal" data-target="#myModal">
+        <th scope="row">{{commande.id.idDepot}}</th>
+        <td>{{commande.producteurs.utilisateur.nom}} {{commande.producteurs.utilisateur.prenom}}</td>
+        <td>{{commande.quantite}}</td>
+        <td>{{commande.categorie}}</td>
+        <td>{{commande.dateDepot}}</td>
+        <td>{{commande.prixKg}}</td>
+        <td>{{commande.prixTransKg}}</td>
+
+        <td><i class="glyphicon glyphicon-shopping-cart"></i> <span class="label label-primary">Depot paddy</span></td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal fade " id="newModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Nouveau dépot de paddy</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Nouveau Dépot de paddy</div>
+            <div class="panel-body">
+
+              <fieldset>
+                <legend> Coordonnées du distributeurs</legend>
+
+
+                <label class="radio-inline"><input type="radio" name="optradio" checked (click)="annuaire(0)"> Consulter
+                  l'annuaire de
+                  Producteurs</label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="annuaire(1)">Ajouter un nouveau
+                  Producteurs</label>
+                <p></p>
+                <div class="form-group row" *ngIf="condition===1">
+                  <div class="col-xs-6">
+                    <label for="nom">Nom du Producteur *</label>
+                    <input class="form-control" id="nom" type="text" [(ngModel)]="user.nom"
+                      placeholder="Nom du producteur">
+                  </div>
+                  <div class="col-xs-6">
+                    <label for="prenom">Prenom du Producteur *</label>
+                    <input class="form-control" id="prenom" type="text" [(ngModel)]="user.prenom"
+                      placeholder="Prénom du producteur">
+                  </div>
+                  <br>
+                  <div class="col-xs-3">
+                    <label for="prenom">Téléphone</label>
+                    <input class="form-control" id="telephone" [(ngModel)]="user.telephone" type="number">
+                  </div>
+                  <div class="col-xs-7">
+                    <label for="email">Email Producteur</label>
+                    <input class="form-control" id="email" type="email" [(ngModel)]="user.email"
+                      placeholder="Email du producteur">
+                  </div>
+                  <div class="col-xs-2">
+                    <label for="email">BP</label>
+                    <input class="form-control" id="bp" type="number" [(ngModel)]="user.bp" placeholder="Boite Postale">
+                  </div>
+                  <br>
+                  <div class="col-xs-7">
+                    <label for="adresse">Adresse</label>
+                    <input class="form-control" id="adresse" type="text" [(ngModel)]="user.adresse"
+                      placeholder="Adresse">
+                  </div>
+                  <div class="col-xs-5">
+                    <label class="control-label">Gies</label>
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </div>
+
+                </div>
+                <div *ngIf="condition===0">
+                  <label class="control-label">Choisir le Producteurs dans l'annuaire:</label>
+                  <select class="form-control">
+                    <option></option>
+                  </select>
+                </div>
+
+
+              </fieldset>
+              <p></p>
+              <div class="form-group">
+                <fieldset>
+                  <legend>Informations sur le Dépot</legend>
+
+
+                  <div class="form-group row">
+                    <div class="col-xs-4">
+                      <label class="control-label">Catégorie de paddy:</label>
+                      <input class="form-control" type="text" [(ngModel)]="paddy.categorie"
+                        placeholder="Catéorie du paddy à déposer">
+                    </div>
+                    <div class="col-xs-3">
+                      <label class="control-label">Quantité (KGs):</label>
+                      <input class="form-control" type="number" [(ngModel)]="paddy.quantite" placeholder="Quantité">
+                    </div>
+                    <div class="col-xs-4">
+                      <label class="control-label">Prix KG</label>
+                      <input class="form-control" type="number" [(ngModel)]="paddy.prixKg"
+                        placeholder="prix paddy en FCFA">
+                    </div>
+                    <div class="col-xs-5">
+                      <label class="control-label">Prix de Transformation par KG</label>
+                      <input class="form-control" type="number" [(ngModel)]="paddy.prixTransKg" placeholder="en FCFA">
+                    </div>
+                    <div class="col-xs-5">
+                      <label class="control-label">Date du dépot dans l'usine</label>
+                      <input class="form-control" [(ngModel)]="paddy.dateDepot" type="date">
+                    </div>
+
+                  </div>
+
+
+                </fieldset>
+              </div>
+              <button type="button" class="btn btn-success" data-dismiss="modal" (click)="newdepot()">Enregistrer
+                Depot</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Détails sur le dépot de paddy</h4>
+        </div>
+        <div class="modal-body">
+          <fieldset>
+            <legend>Informations du Producteur de Paddy</legend>
+            <p>{{depotSelected.id.idDepot}}</p>
+            <p> Nom du producteur :{{depotSelected.producteurs.utilisateur.nom}} </p>
+            <p>Prénom du producteur:{{depotSelected.producteurs.utilisateur.prenom}}</p>
+            <p>Email du Producteur {{depotSelected.producteurs.utilisateur.email}} </p>
+            <p>TEL du producteur : {{depotSelected.producteurs.utilisateur.telephone}}</p>
+
+          </fieldset>
+          <fieldset>
+            <legend>Informations sur le Dépot de paddy</legend>
+            <p>Quantité du depot :{{depotSelected.quantite}}</p>
+            <p>Catégorie de paddy:{{depotSelected.categorie}}</p>
+            <p>Date du depot :{{depotSelected.dateDepot}}</p>
+            <p>Prix du paddy/KG :{{depotSelected.prixKg}}FCFA</p>
+            <p>Prix de transformation par unité : {{depotSelected.prixTransKg}} FCFA</p>
+          </fieldset>
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success" data-dismiss="modal">Enregistrer La transformation</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>

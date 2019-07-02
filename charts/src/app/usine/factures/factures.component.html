@@ -1,0 +1,170 @@
+<div *ngIf="id==0">
+  formulaire facture{{commande.distributeurs.utilisateur.nom}}
+
+  <div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Nouvelle Facture</div>
+      <div class="panel-body">
+        <div class="row">
+
+
+          <div class="form-group col-xs-6">
+            <label class="control-label">commande:</label>
+            <input class="form-control" type="text" placeholder="{{commande.idcomLocal}}" disabled>
+          </div>
+          <div class="form-group col-xs-6">
+            <label class="control-label">Prenom distributeur:</label>
+            <input class="form-control" type="text" placeholder=" {{commande.distributeurs.utilisateur.prenom}}" disabled>
+          </div>
+          <div class="form-group col-xs-6">
+            <label class="control-label">Nom distributeur:</label>
+            <input class="form-control" type="text" placeholder="{{commande.distributeurs.utilisateur.nom}}" disabled>
+          </div>
+          <div class="form-group col-xs-4">
+            <label class="control-label">Qualité:</label>
+            <input class="form-control" type="text" placeholder="{{commande.qualite}}" disabled>
+          </div>
+          <div class="form-group col-xs-4">
+            <label class="control-label">Quantité:</label>
+            <input class="form-control" type="text" placeholder="{{commande.quantite}}" disabled>
+          </div>
+
+          <div class="form-group col-xs-4">
+            <label class="control-label">Prix Unitaire(FCFA):</label>
+            <input class="form-control" type="number" [(ngModel)]="facture.prixUnitaire">
+          </div>
+          <div class="form-group col-xs-4">
+            <label class="control-label">Prix Total(FCFA):</label>
+            <input class="form-control" type="number" [value]="facture.prixUnitaire*commande.quantite" disabled>
+          </div>
+
+        </div>
+
+        <button class="btn btn-primary" (click)="creerFacture()" data-toggle="modal" data-target="#myModalf">Créer
+          Facture</button>
+
+
+      </div>
+    </div>
+    <!--Modals for Facture-->
+    <div class="modal fade" id="myModalf" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Details de la Nouvelle Facture</h4>
+          </div>
+          <div class="modal-body">
+            <p>Nom et Prenom du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.nom}}
+              {{facture.commandeLocal.distributeurs.utilisateur.prenom}}
+            </p>
+            <p>Numéro du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.telephone}}</p>
+            <p>Email du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.email}}</p>
+            <p>Adresse du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.adresse}}</p>
+            <p>Qualité de riz commandé: {{facture.commandeLocal.qualite}}</p>
+            <p>Quantité de riz commandé (KG): {{facture.commandeLocal.quantite}}</p>
+            <p>Prix Unitaire (FCFA): {{facture.prixUnitaire}}</p>
+            <p>Prix Unitaire (FCFA): {{facture.prixTotal}}</p>
+
+          </div>
+          <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="confirm()">Confirmer</button>
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<div *ngIf="id==2">
+
+  <!-- Modal conten<button type="button" [ngClass]="{'btn-info': selected ,'btn':true}"  [disabled]="!selected">Details commande</button>t-->
+  <div class="row">
+
+    
+    <div class="btn-group ">
+      <button type="button" class="btn btn-primary">Actions+</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Edit</a></li>
+        <li><a href="#">Nouveau</a></li>
+      </ul>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Facture pour un distributeur">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button">Rechercher</button>
+        </span>
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+  </div>
+
+  <table class="table table-hovers table-striped table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Numéro facture</th>
+        <th scope="col">Distributeurs</th>
+        <th scope="col">Montant de la facture</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      <tr *ngFor="let f of factures" (click)="isSelected(f)" (mouseover)="hovered=true" (mouseout)="hovered=false"
+        data-toggle="modal" data-target="#myModals">
+        <th scope="row">{{f.idfactLocal}}</th>
+        <td>{{f.commandeLocal.distributeurs.utilisateur.nom}} {{f.commandeLocal.distributeurs.utilisateur.prenom}}
+        </td>
+        <td>{{f.prixTotal}} FCFA</td>
+        <td><i class="glyphicon glyphicon-save-file"></i> <span class="label label-success">Payé</span></td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="myModals" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Details de la facture</h4>
+        </div>
+        <div class="modal-body" id="printJS-form">
+          <p>Nom et Prenom du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.nom}}
+            {{facture.commandeLocal.distributeurs.utilisateur.prenom}}
+          </p>
+          <p>Numéro du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.telephone}}</p>
+          <p>Email du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.email}}</p>
+          <p>Adresse du distributeur: {{facture.commandeLocal.distributeurs.utilisateur.adresse}}</p>
+          <p>Qualité de riz commandé: {{facture.commandeLocal.qualite}}</p>
+          <p>Quantité de riz commandé (KG): {{facture.commandeLocal.quantite}}</p>
+          <p>Prix Unitaire (FCFA): {{facture.prixUnitaire}}</p>
+          <p>Montant Total de la facture (FCFA): {{facture.prixTotal}}</p>
+          
+
+        </div>
+        <div class="modal-footer">
+
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="printJS('printJS-form', 'html')">Imprimer la facture</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Supprimer la facture</button>
+
+
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+</div>

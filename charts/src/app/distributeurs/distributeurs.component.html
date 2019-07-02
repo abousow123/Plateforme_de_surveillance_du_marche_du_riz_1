@@ -1,0 +1,260 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <i class="fa fa-bar-chart-o"></i>
+
+    <h3 class="box-title">Catalogue des Stockls de riz local
+    </h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <div class="pull-right">
+          <a href="#" class="btn btn-default btn-flat glyphicon glyphicon-off">Signout</a>
+        </div>
+    </div>
+  </div>
+  <div class="box-body">
+    <div class="row">
+
+      <div class="col-sm-6 col-md-3" *ngFor="let local of locals" data-toggle="modal" data-target="#myModalinf">
+        <div class="thumbnail">
+          <img src="../../../assets/dist/img/riz1.jpg" alt="...">
+          <div class="caption">
+            <h3>{{local.usineTransformation.nomUsine}}</h3>
+            <p>Lieu :{{local.lieuStock}}</p>
+            <p>TEL: {{local.usineTransformation.telephone}}</p>
+            <p>email: {{local.usineTransformation.email}}</p>
+            <p>Région de Siége: {{local.usineTransformation.departement.region.nomRegion}}</p>
+
+
+            <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myStock"
+                (click)="selected(local)">Consulter le stock</button></p>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+    <div class="modal fade" id="myStock" role="dialog" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog ">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Informations Stock</h4>
+          </div>
+          <div class="modal-body">
+            
+              
+
+                <fieldset>
+                  <legend> Coordonnées du Stock</legend>
+
+                  <h3>{{slocal.usineTransformation.nomUsine}}</h3>
+                  <p>Lieu :{{slocal.lieuStock}}</p>
+                  <p>TEL: {{slocal.usineTransformation.telephone}}</p>
+                  <p>email: {{slocal.usineTransformation.email}}</p>
+                  <p>Siége: {{slocal.usineTransformation.departement.region.nomRegion}}</p>
+
+                </fieldset>
+                <p></p>
+                <div class="form-group">
+                  <fieldset>
+                    <legend>Informations sur le Stockl</legend>
+
+                    <h3>Quantité en stock :{{slocal.quatite}}</h3>
+
+                    <div class="col-sm-6 col-md-3" *ngFor="let categorie of slocal?.stockes" >
+                       <div class="thumbnail">
+                         <img src="../../../assets/dist/img/riz1.jpg" alt="...">
+                         <div class="caption">
+                           <p>{{categorie.categorie.categorie}}</p>
+                           <p>{{categorie.quantite}}Kgs</p>
+               
+                           
+                         </div>
+                       </div>
+                       
+                     </div>
+
+
+
+                  </fieldset>
+                </div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mycom" data-dismiss="modal">Passer une commande</button>
+
+              
+            
+          </div>
+          <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="mycom" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog ">
+  
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Nouvelle commande</h4>
+            </div>
+            <div class="modal-body">
+              
+                
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Nouvelle Commande</div>
+                    <div class="panel-body">
+        
+                    <!--  <fieldset>
+                        <legend> Coordonnées du distributeurs</legend>
+        
+        
+                        <label class="radio-inline"><input type="radio" name="optradio" checked (click)="annuaire(0)"> Consulter
+                          l'annuaire de
+                          Distributeur</label>
+                        <label class="radio-inline"><input type="radio" name="optradio" (click)="annuaire(1)">Ajouter un nouveau
+                          Distributeur</label>
+                        <p></p>
+                        <div class="form-group row" *ngIf="condition===1">
+                          <div class="col-xs-6">
+                            <label for="nom">Nom du Distributeur *</label>
+                            <input class="form-control" id="nom" type="text" [(ngModel)]="user.nom"
+                              placeholder="Nom du producteur">
+                          </div>
+                          <div class="col-xs-6">
+                            <label for="prenom">Prenom du Distributeur *</label>
+                            <input class="form-control" id="prenom" type="text" [(ngModel)]="user.prenom"
+                              placeholder="Prénom du producteur">
+                          </div>
+                          <br>
+                          <div class="col-xs-3">
+                            <label for="prenom">Téléphone</label>
+                            <input class="form-control" id="telephone" [(ngModel)]="user.telephone" type="number">
+                          </div>
+                          <div class="col-xs-7">
+                            <label for="email">Email Distributeur</label>
+                            <input class="form-control" id="email" type="email" [(ngModel)]="user.email"
+                              placeholder="Email du producteur">
+                          </div>
+                          <div class="col-xs-2">
+                            <label for="email">BP</label>
+                            <input class="form-control" id="bp" type="number" [(ngModel)]="user.bp" placeholder="Boite Postale">
+                          </div>
+                          <br>
+                          <div class="col-xs-7">
+                            <label for="adresse">Adresse</label>
+                            <input class="form-control" id="adresse" type="text" [(ngModel)]="user.adresse"
+                              placeholder="Adresse">
+                          </div>
+                          <div class="col-xs-5">
+                            <label class="control-label">Gies</label>
+                            <select class="form-control" [(ngModel)]="gieid">
+                              <option  *ngFor="let u of  gies" [value]="u.idGies2">{{u.nomGie}}</option>
+                            </select>
+                          </div>
+        
+                        </div>
+                        <div *ngIf="condition===0">
+                          <label class="control-label">Choisir le Distributeur ou Commercant dans l'annuaire:</label>
+                          <select class="form-control" [(ngModel)]="dist">
+                            <option *ngFor="let d of distributeurs" [value]="d">{{d.ncCommercant}} {{d.utilisateur.nom}} {{d.utilisateur.prenom}}</option>
+                          </select>
+                        </div>
+        
+        
+                      </fieldset> -->
+                      <p></p>
+                      <div class="form-group">
+                        <fieldset>
+                          <legend>Informations sur la commande</legend>
+        
+        
+                          <div class="form-group row">
+                            <div class="col-xs-4">
+                              <label class="control-label">Catégorie de Riz:</label>
+                              <select class="form-control" [(ngModel)]="dist">
+                                  <option *ngFor="let d of slocal?.stockes" [value]="d.categorie.categorie">{{d.categorie.categorie}} </option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                              <label class="control-label">Quantité (KGs):</label>
+                              <input class="form-control" type="number" [(ngModel)]="Command.quantite" placeholder="Quantité">
+                            </div>
+        
+        
+                          </div>
+        
+        
+                        </fieldset>
+                      </div>
+                      <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#myModalvalid" (click)="newcommande()">Envoyer la commande
+                        </button>&nbsp;
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+        
+        
+                    </div>
+                  </div>
+                
+              
+            </div>
+            <div class="modal-footer">
+  
+  
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+  
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+      <div class="modal fade" id="myModalvalid" role="dialog">
+          <div class="modal-dialog">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Commande Effectuée</h4>
+              </div>
+              <div class="modal-body">
+              <fieldset>
+                <legend>Informations de la commande</legend>
+
+                <p>Qualité de riz commandé: {{Command.qualite}}</p>
+                <p>Quantité de riz commandé (KG): {{Command.quantite}}</p>
+              </fieldset>
+              
+              </div>
+              <div class="modal-footer">
+      
+               
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Fermer</button>
+              
+      
+              </div>
+            </div>
+      
+          </div>
+        </div>
+    
+
+
+
+  </div>
+  <!-- /.box-body-->
+</div>

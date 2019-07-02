@@ -1,0 +1,36 @@
+
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+      
+      <ul class="nav navbar-nav">
+        <li class="active"><a routerLink="/user">Gestion des comptes</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion des Stocks riz 
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a routerLink="/local">Stocks Locales</a></li>
+            <li><a  routerLink="/import">Stocks Importés</a></li>
+           
+          </ul>
+        </li>
+        <li><a routerLink="">Catalogue des variétés de riz</a></li>
+        <li><a  routerLink="/statistique">Statistiques du marché</a></li>
+       
+        <li class="dropdown">
+            <a class="dropdown-toggle glyphicon glyphicon-off" data-toggle="dropdown" href="#"> Mon Compte
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat glyphicon glyphicon-user" >Profil</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat glyphicon glyphicon-off">Signout</a>
+                    </div>
+                  </li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet> </router-outlet>
